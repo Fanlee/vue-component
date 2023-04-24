@@ -4,6 +4,7 @@
 
 <script>
 import Emitter from '../../mixins/emitter.js';
+
 export default {
   name: 'iInout',
   mixins:[Emitter],

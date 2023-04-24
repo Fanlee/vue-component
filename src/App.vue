@@ -2,7 +2,7 @@
  * @Author: lihuan
  * @Date: 2023-04-23 17:03:49
  * @LastEditors: lihuan
- * @LastEditTime: 2023-04-24 10:54:54
+ * @LastEditTime: 2023-04-24 14:49:46
  * @Description: 
 -->
 
@@ -15,57 +15,66 @@
       <i-form-item label="邮箱" prop="mail">
         <i-input v-model="formValidate.mail"></i-input>
       </i-form-item>
+      <i-form-item label="选择框">
+        <i-checkbox-group v-model="multiple">
+          <i-checkbox label="option1">选项 1</i-checkbox>
+          <i-checkbox label="option2">选项 2</i-checkbox>
+          <i-checkbox label="option3">选项 3</i-checkbox>
+          <i-checkbox label="option4">选项 4</i-checkbox>
+        </i-checkbox-group>
+      </i-form-item>
     </i-form>
     <button @click="handleSubmit">提交</button>
     <button @click="handleReset">重置</button>
   </div>
-
 </template>
 
 <script>
-import iForm from './components/form/Form.vue'
-import iFormItem from './components/form/FormItem.vue'
-import iInput from './components/input/Input.vue'
+import iForm from "./components/form/Form.vue";
+import iFormItem from "./components/form/FormItem.vue";
+import iInput from "./components/input/Input.vue";
+import iCheckbox from "./components/checkbox/Checkbox.vue";
+import iCheckboxGroup from "./components/checkbox/CheckboxGroup.vue";
 export default {
-  name: 'App',
-  components: { iForm, iFormItem ,iInput},
-  data() { 
+  name: "App",
+  components: { iForm, iFormItem, iInput, iCheckbox, iCheckboxGroup },
+  data() {
     return {
+      multiple: ["option1", "option2"],
       formValidate: {
-        name: '',
-        mail: ''
+        name: "",
+        mail: "",
+        checked: false,
       },
       ruleValidate: {
-        name: [
-            { required: true, message: '用户名不能为空', trigger: 'blur' }
-          ],
+        name: [{ required: true, message: "用户名不能为空", trigger: "blur" }],
         mail: [
-        { required: true, message: '邮箱不能为空', trigger: 'blur' },
-        { type: 'email', message: '邮箱格式不正确', trigger: 'blur' },
+          { required: true, message: "邮箱不能为空", trigger: "blur" },
+          { type: "email", message: "邮箱格式不正确", trigger: "blur" },
         ],
-      }
-    }
+      },
+    };
   },
   methods: {
-    handleSubmit() { 
-      this.$refs.form.validate((valid) => { 
+    handleSubmit() {
+      this.$refs.form.validate((valid) => {
         if (valid) {
-            window.alert('提交成功');
-          } else {
-            window.alert('表单校验失败');
-          }
-      })
+          window.alert("提交成功");
+        } else {
+          window.alert("表单校验失败");
+        }
+      });
     },
-    handleReset() { 
-      this.$refs.form.resetFields()
-    }
-  }
-}
+    handleReset() {
+      this.$refs.form.resetFields();
+    },
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

@@ -2,13 +2,13 @@
  * @Author: lihuan
  * @Date: 2023-04-24 11:20:55
  * @LastEditors: lihuan
- * @LastEditTime: 2023-04-24 11:35:59
+ * @LastEditTime: 2023-04-24 14:56:20
  * @Description:
  */
 // 由一个组件，向上找到最近的指定组件
 export function findComponentUpward(context, componentName) {
   let parent = context.$parent;
-  let name = context.$options.name;
+  let name = parent.$options.name;
   while (parent && (!name || [componentName].indexOf(name) < 0)) {
     parent = parent.$parent;
     if (parent) {
