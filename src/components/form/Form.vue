@@ -2,7 +2,7 @@
  * @Author: lihuan
  * @Date: 2023-04-23 17:10:05
  * @LastEditors: lihuan
- * @LastEditTime: 2023-04-23 17:58:22
+ * @LastEditTime: 2023-04-24 10:52:03
  * @Description: 
 -->
 <template>
@@ -22,6 +22,11 @@ export default {
       type: Object,
     },
   },
+  provide() { 
+    return {
+      form:this
+    }
+  },
   data() {
     return {
       fields: [],
@@ -35,9 +40,32 @@ export default {
 			 if (field.prop) this.fields.splice(this.fields.indexOf(field), 1);
 		})
 	},
-	mounted() { 
-		console.log(this.fields)
-	}
+  methods: {
+    resetFields() { 
+      this.fields.forEach(field => { 
+        field.resetField()
+      })
+    },
+    validate(callback) {
+      return new Promise(resolve => {
+        let valid = true;
+        let count = 0;
+        this.fields.forEach(field => { 
+          field.validate('', errors => { 
+            if (errors) { 
+              valid = false
+            }
+            if (++count === this.fields.length) { 
+              resolve(valid);
+              if (typeof callback === 'function') {
+                callback(valid);
+              }
+            }
+          })
+        })
+       }) 
+    }
+  }
 };
 </script>
 
